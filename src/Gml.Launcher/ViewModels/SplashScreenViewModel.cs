@@ -89,6 +89,8 @@ public class SplashScreenViewModel : WindowViewModelBase
 
             await _systemService.LoadSystemData();
 
+            ThemeService.ApplyActive();
+
             ChangeState(_localizationService.GetString(SystemConstants.BackendChecking), true);
             _isBackendChecked = false;
             _timer.Start();

@@ -1,0 +1,38 @@
+{
+  "Name": "my-brand",
+  "DisplayName": "My Brand",
+  "Colors": {
+    "PrimaryColor": "#008C45",
+    "PrimaryColorHover": "#01763B",
+    "PrimaryTransparentColor": "#101412",
+    "HeadlineColor": "#FFFFFF",
+    "ContentColor": "#969696",
+    "BackgroundColor": "#0E0E0E",
+    "FrameBackgroundColor": "#111111",
+    "FrameBackgroundBorderColor": "#2E2E2E",
+    "SecondaryColor": "#060B0D",
+    "SecondaryColorHover": "#131719",
+    "FormBackgroundColor": "#151515",
+    "FormBackgroundHoverColor": "#1C1C1C",
+    "FormBorderColor": "#212121",
+    "FormBorderHoverColor": "#2C2C2C",
+    "BadgeBorder": "#20FFFFFF"
+  },
+  "Visibility": {
+    "News": true,
+    "Online": true,
+    "ServerInfo": true,
+    "SocialLinks": true,
+    "ModsListButton": true,
+    "Logo": true,
+    "ProfileButton": true,
+    "LogoutButton": true,
+    "Sidebar": true,
+    "Footer": true
+  },
+  "Layout": {
+    "SidebarPosition": "Left",
+    "BrandName": "MY SERVER"
+  },
+  "Assets": {}
+}

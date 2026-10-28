@@ -12,30 +12,33 @@
     </Design.PreviewWith>
 
     <Style Selector="controls|LogoComponent.Icon">
-        <!-- Set Defaults -->
+        <Setter Property="LogoPath" Value="{DynamicResource ThemeLogoPath}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <Svg Path="/Assets/Images/logo.svg"
+                <Svg Path="{TemplateBinding LogoPath}"
                      Width="{TemplateBinding Size}"
-                     Height="{TemplateBinding Size}" />
+                     Height="{TemplateBinding Size}"
+                     IsVisible="{DynamicResource ThemeVisible.Logo}" />
             </ControlTemplate>
         </Setter>
     </Style>
 
     <Style Selector="controls|LogoComponent.TextLogo">
-        <!-- Set Defaults -->
+        <Setter Property="LogoPath" Value="{DynamicResource ThemeLogoPath}" />
+        <Setter Property="BrandName" Value="{DynamicResource ThemeLayout.BrandName}" />
         <Setter Property="Template">
             <ControlTemplate>
                 <StackPanel Orientation="Horizontal"
-                            Spacing="15">
-                    <Svg Path="/Assets/Images/logo.svg"
+                            Spacing="15"
+                            IsVisible="{DynamicResource ThemeVisible.Logo}">
+                    <Svg Path="{TemplateBinding LogoPath}"
                          Width="{TemplateBinding Size}"
                          Height="{TemplateBinding Size}" />
-                    <TextBlock Text="GAMERVII"
+                    <TextBlock Text="{TemplateBinding BrandName}"
                                VerticalAlignment="Center"
                                FontSize="26"
                                FontWeight="Bold"
-                               Foreground="{StaticResource HeadlineColor}" />
+                               Foreground="{DynamicResource HeadlineColor}" />
                 </StackPanel>
             </ControlTemplate>
         </Setter>

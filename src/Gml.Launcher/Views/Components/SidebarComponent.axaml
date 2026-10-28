@@ -22,23 +22,18 @@
 
                         <controls:LogoComponent Grid.Row="0"
                                                 Classes="Icon"
-                                                Size="32" />
+                                                Size="32"
+                                                IsVisible="{DynamicResource ThemeVisible.Logo}" />
 
                         <StackPanel Grid.Row="2"
                                     Spacing="10"
                                     VerticalAlignment="Center">
 
-                            <!-- <controls:GmlButton Classes="Icon Secondary" -->
-                            <!--                     Command="{TemplateBinding HomeCommand}" -->
-                            <!--                     Width="60" -->
-                            <!--                     Height="60" -->
-                            <!--                     IconPath="/Assets/Images/home.svg" -->
-                            <!--                     IconSize="22" /> -->
-
                             <controls:GmlButton Classes="Icon Secondary"
                                                 Command="{TemplateBinding ProfileCommand}"
                                                 Width="60"
                                                 Height="60"
+                                                IsVisible="{DynamicResource ThemeVisible.ProfileButton}"
                                                 IconPath="/Assets/Images/profile.svg"
                                                 IconSize="24" />
 
@@ -51,6 +46,7 @@
                                             Command="{TemplateBinding LogoutCommand}"
                                             Width="60"
                                             Height="60"
+                                            IsVisible="{DynamicResource ThemeVisible.LogoutButton}"
                                             IsEnabled="{TemplateBinding IsBackendInactive}"
                                             IconPath="/Assets/Images/logout.svg"
                                             IconSize="20" />

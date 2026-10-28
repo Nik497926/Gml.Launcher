@@ -119,11 +119,16 @@ public class OverviewPageViewModel : PageViewModelBase
 
         HomeCommand = ReactiveCommand.Create(async () => await LoadProfiles());
 
-        _gmlManager.ProgressChanged.Subscribe(percentage =>
-        {
-            if (LoadingPercentage != percentage)
-                LoadingPercentage = percentage;
-        });
+        // При загрузке тысяч мелких файлов (ассеты) события идут из десятков потоков —
+        // обновляем UI не чаще 10 раз в секунду и только из UI-потока
+        _gmlManager.ProgressChanged
+            .Sample(TimeSpan.FromMilliseconds(100))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(percentage =>
+            {
+                if (LoadingPercentage != percentage)
+                    LoadingPercentage = percentage;
+            });
 
         _gmlManager.ProfilesChanges.Subscribe(LoadProfilesAsync);
 
@@ -131,7 +136,10 @@ public class OverviewPageViewModel : PageViewModelBase
         _profileNameChanged ??= ListViewModel.ProfileChanged.Subscribe(OnProfileChanged);
 
         _maxCountLoaded ??= _gmlManager.MaxFileCount.Subscribe(count => MaxCount = count);
-        _loadedLoaded ??= _gmlManager.LoadedFilesCount.Subscribe(ChangeLoadProcessDescription);
+        _loadedLoaded ??= _gmlManager.LoadedFilesCount
+            .Sample(TimeSpan.FromMilliseconds(100))
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(ChangeLoadProcessDescription);
 
         _speedSubscription = _gmlManager.DownloadedBytesDelta
             .Buffer(TimeSpan.FromSeconds(1))

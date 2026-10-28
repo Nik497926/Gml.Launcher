@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Gml.Launcher.Core.Services;
 using Gml.Launcher.ViewModels;
 using Gml.Launcher.Views;
 using Gml.Launcher.Views.SplashScreen;
@@ -13,6 +14,8 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+        // Тема из Themes/active.json (задаётся владельцем при сборке)
+        ThemeService.ApplyActive();
     }
 
     public override async void OnFrameworkInitializationCompleted()

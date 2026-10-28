@@ -15,20 +15,29 @@
              x:Class="Gml.Launcher.Views.Pages.OverviewPageView">
 
 
-    <Grid ColumnDefinitions="Auto, *">
+    <Grid>
 
         <!-- Background -->
-        <components:BackgroundComponent Grid.Column="0"
-                                        Grid.ColumnSpan="2"
-                                        converters:AsyncStreamToImageLoader.Source="{Binding ListViewModel.SelectedProfile.Background}" />
+        <components:BackgroundComponent
+            converters:AsyncStreamToImageLoader.Source="{Binding ListViewModel.SelectedProfile.Background}" />
 
-        <Rectangle Grid.Column="0"
-                   Grid.ColumnSpan="2"
-                   Opacity=".1"
+        <Rectangle Opacity=".1"
                    Fill="{DynamicResource BackgroundOverlay}" />
 
+        <DockPanel LastChildFill="True">
+
+        <!-- Sidebar: Dock задаётся темой (Left | Right) -->
+        <components:SidebarComponent
+            DockPanel.Dock="{DynamicResource ThemeLayout.SidebarDock}"
+            IsVisible="{DynamicResource ThemeVisible.Sidebar}"
+            ListViewModel="{Binding ListViewModel}"
+            LogoutCommand="{Binding LogoutCommand}"
+            HomeCommand="{Binding HomeCommand}"
+            IsBackendInactive="{Binding BackendIsActive}"
+            ProfileCommand="{Binding GoProfileCommand}" />
+
         <!-- Content -->
-        <Border Grid.Column="1" Padding="25">
+        <Border Padding="25">
 
             <Grid ColumnDefinitions="Auto, 30, *"
                   RowDefinitions="60, 30, *, 30, Auto">
@@ -36,6 +45,7 @@
                 <components:OnlineComponent
                     Grid.Row="0"
                     Grid.Column="0"
+                    IsVisible="{DynamicResource ThemeVisible.Online}"
                     Online="{Binding ListViewModel.SelectedProfile.Servers,
                     Converter={converters:SumServersOnlineConverter}}"
                     VerticalAlignment="Center" />
@@ -50,7 +60,11 @@
                                         Speed="{Binding LoadingSpeed}" />
 
                 <!-- News -->
-                <Grid RowDefinitions="Auto, 0, *" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="2">
+                <Grid RowDefinitions="Auto, 0, *"
+                      VerticalAlignment="Stretch"
+                      Grid.Row="2"
+                      Grid.Column="2"
+                      IsVisible="{DynamicResource ThemeVisible.News}">
                     <TextBlock Classes="HeadlineText" Text="{x:Static lang:Resources.News}"/>
                     <ScrollViewer Grid.Row="2" CornerRadius="10" ClipToBounds="True">
                         <ItemsControl ItemsSource="{Binding News}">
@@ -68,32 +82,35 @@
                 </Grid>
 
                 <!-- Server Info -->
-                <components:ServerInfo Grid.Column="0"
-                                       Grid.Row="2"
-                                       Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
-                                       PlayCommand="{Binding PlayCommand}"
-                                       ReinstallCommand="{Binding ReinstallCommand}"
-                                       RemoveCommand="{Binding RemoveCommand}"
-                                       SettingsCommand="{Binding GoSettingsCommand}"
-                                       GoModsCommand="{Binding GoModsCommand}"
-                                       IsVisible="{Binding ListViewModel.HasSelectedItem}"
-                                       BackendIsNotOffline="{Binding BackendIsActive}"
-                                       IsModsButtonVisible="{Binding IsModsButtonVisible}"
-                                       ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName, FallbackValue={x:Null}}"
-                                       GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion, FallbackValue={x:Null}}"
-                                       LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion, FallbackValue={x:Null}}"
-                                       ProfileDescription="{Binding ListViewModel.SelectedProfile.Description, FallbackValue={x:Null}}"
-                                       State="{Binding ListViewModel.SelectedProfile.State, FallbackValue={x:Null}}"
-                                       CreateDate="{Binding ListViewModel.SelectedProfile.CreateDate, FallbackValue={x:Null}}"
-                                       Status="{x:Static lang:Resources.Available}"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Left" />
+                <Border Grid.Column="0"
+                        Grid.Row="2"
+                        IsVisible="{DynamicResource ThemeVisible.ServerInfo}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left">
+                    <components:ServerInfo Classes.Animated="{Binding ListViewModel.HasSelectedItem}"
+                                           PlayCommand="{Binding PlayCommand}"
+                                           ReinstallCommand="{Binding ReinstallCommand}"
+                                           RemoveCommand="{Binding RemoveCommand}"
+                                           SettingsCommand="{Binding GoSettingsCommand}"
+                                           GoModsCommand="{Binding GoModsCommand}"
+                                           IsVisible="{Binding ListViewModel.HasSelectedItem}"
+                                           BackendIsNotOffline="{Binding BackendIsActive}"
+                                           IsModsButtonVisible="{Binding IsModsButtonVisible}"
+                                           ProfileName="{Binding ListViewModel.SelectedProfile.DisplayName, FallbackValue={x:Null}}"
+                                           GameVersion="{Binding ListViewModel.SelectedProfile.GameVersion, FallbackValue={x:Null}}"
+                                           LaunchVersion="{Binding ListViewModel.SelectedProfile.LaunchVersion, FallbackValue={x:Null}}"
+                                           ProfileDescription="{Binding ListViewModel.SelectedProfile.Description, FallbackValue={x:Null}}"
+                                           State="{Binding ListViewModel.SelectedProfile.State, FallbackValue={x:Null}}"
+                                           CreateDate="{Binding ListViewModel.SelectedProfile.CreateDate, FallbackValue={x:Null}}"
+                                           Status="{x:Static lang:Resources.Available}" />
+                </Border>
 
                 <!-- Footer -->
                 <Grid Grid.Row="4"
                       Grid.Column="0"
                       Grid.ColumnSpan="3"
-                      ColumnDefinitions="Auto, *, Auto">
+                      ColumnDefinitions="Auto, *, Auto"
+                      IsVisible="{DynamicResource ThemeVisible.Footer}">
 
                     <components:GmlButton Grid.Column="0"
                                           IconPath="/Assets/Images/document.svg"
@@ -101,11 +118,13 @@
                                           CommandParameter="https://vk.com/recloud.studio"
                                           IconSize="22"
                                           Classes="TextIcon Additional"
+                                          IsVisible="{DynamicResource ThemeVisible.ModsListButton}"
                                           Text="{x:Static lang:Resources.ModsList}" />
 
                     <StackPanel Grid.Column="2"
                                 Orientation="Horizontal"
-                                Spacing="10">
+                                Spacing="10"
+                                IsVisible="{DynamicResource ThemeVisible.SocialLinks}">
 
                         <components:GmlButton IconPath="/Assets/Images/vk.svg"
                                               IconSize="24"
@@ -131,13 +150,7 @@
 
         </Border>
 
-        <!-- Sidebar -->
-        <components:SidebarComponent Grid.Column="0"
-                                     ListViewModel="{Binding ListViewModel}"
-                                     LogoutCommand="{Binding LogoutCommand}"
-                                     HomeCommand="{Binding HomeCommand}"
-                                     IsBackendInactive="{Binding BackendIsActive}"
-                                     ProfileCommand="{Binding GoProfileCommand}" />
+        </DockPanel>
 
     </Grid>
 

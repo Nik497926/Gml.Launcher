@@ -208,7 +208,8 @@ public class SettingsPageViewModel : PageViewModelBase
                 int.Parse(update.height),
                 update.isFullScreen,
                 update.isDynamicRam,
-                update.ramValue, update.selectedLanguage?.Culture.Name);
+                update.ramValue,
+                update.selectedLanguage?.Culture.Name);
 
             await _settingsService.UpdateSettingsAsync(newSettings);
         }

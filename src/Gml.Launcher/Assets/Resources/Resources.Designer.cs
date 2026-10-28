@@ -676,6 +676,15 @@ namespace Gml.Launcher.Assets.Resources {
         }
 
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Theme.
+        /// </summary>
+        public static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Window size.
         /// </summary>
         public static string TwoFactorTitle {
